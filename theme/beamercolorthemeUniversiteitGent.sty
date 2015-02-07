@@ -1,18 +1,31 @@
 % Copyright 2012 Pieter Belmans
-% https://github.com/pbelmans/ugent-beamer
+% https://github.com/beukueb/ugent-beamer
 %
 % Based on Nico Schlömer's ua-beamer (https://github.com/nschloe/ua-beamer)
+% and P Belmans ugent-beamer (https://github.com/pbelmans/ugent-beamer)
 %
 % This file may be distributed and/or modified
 %
 % 1. under the LaTeX Project Public License and/or
 % 2. under the GNU Public License.
 
+% introduce color options
+\newif\ifbeamer@faculty
+\beamer@facultyfalse
+\newcommand\beamer@facultyvalue{}
+\DeclareOptionBeamer{faculty}{\beamer@facultytrue\renewcommand\beamer@facultyvalue{#1}}
+
+\newif\ifbeamer@usefacultycolors\beamer@usefacultycolorsfalse
+\DeclareOptionBeamer{usecolors}{\beamer@usefacultycolorstrue}
+
+\ProcessOptionsBeamer
+% end options
+
 \RequirePackage{ifthen}
 
 \mode<presentation>
 
-\input{colors}
+\input{ugent_colors}
 
 \ifbeamer@faculty\colorlet{ugent-faculty}{ugent-\beamer@facultyvalue}\fi
 
@@ -36,6 +49,11 @@
 \setbeamercolor{subtitle}            {fg = ugentyellow}%
 \setbeamercolor{author}              {fg = ugentblue}%
 
+% palette colors => this allows easier interoperability with other themes
+\setbeamercolor{palette primary}{fg=white,bg=ugentalert!50!ugentblue}
+\setbeamercolor{palette secondary}{fg=white,bg=ugentalert}
+\setbeamercolor{palette tertiary}{fg=white,bg=ugentblue}
+
 % alert color
 \setbeamercolor{alerted text}{fg=ugentalert}
 
@@ -47,6 +65,11 @@
 \setbeamercolor{block body}        {fg=ugentblue,use=block title,bg=ugentblue!10!white}
 \setbeamercolor{block body alerted}{fg=ugentblue,use=block title alerted,bg=ugentalert!10!white}
 \setbeamercolor{block body example}{fg=ugentblue,use=block title example,bg=ugentexample!10!white}
+
+%theme customizations => some themes need specific hacks
+%%AnnArbor %TODO this should be in an if clause, only when the theme is used
+\setbeamercolor{frametitle}{fg = white, bg = ugentblue}
+\setbeamercolor{titlelike}{fg=ugentblue!10!white,bg=ugentblue!90!black}
 
 \mode
 <all>
