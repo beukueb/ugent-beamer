@@ -54,9 +54,35 @@
   \end{centering}
 }
 
-%% ugent logo
+%% UGent logo
+%%% According to other template position 
 \logo{\includegraphics[height=1cm]{images/ugent_logo.pdf}}
+%%% According to UGent mini theme 
+%\setbeamertemplate{sidebar left}{ 
+%\vfill 
+%\rlap{%\hskip0.1cm 
+% \includegraphics[scale=0.3]{images/ugent_logo.pdf} } 
+%\vskip20pt 
+%}
 
+% Table of content %TODO make optional
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% Sub themes
 %\useinnertheme{UniversiteitGent}
 %\usefonttheme {UniversiteitGent}
 \usecolortheme{UniversiteitGent}
