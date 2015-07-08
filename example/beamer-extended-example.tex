@@ -1,0 +1,207 @@
+%This is an extended example with as many different features for presentations
+
+\documentclass{beamer}
+%\documentclass[12pt,handout]{beamer}
+\usepackage[latin1]{inputenc}
+
+%Useful packages [comment out what is not needed]
+\usepackage[overlay,absolute]{textpos} %for positioning graphics absolutely
+\usepackage{soul} %for crossing out text with \st{}
+\usepackage{multimedia} %for animations
+\usepackage{listings} %for code
+\usepackage{etoolbox} %for using settings (if...)
+
+%Settings
+% can either be set here, or given as commandline argument
+% Example setting as command line argument:
+%  pdflatex "\newcommand\presentationPlatform{linux}\input{presentation}"
+\providecommand{\presentationPlatform}{linux} %linux, win or mac
+
+%Theme
+%%Structure
+\usetheme{AnnArbor}%AnnArbor,Warsaw,Madrid,Darmstadt
+%\useoutertheme{infolines}
+%\useinnertheme{rectangles}
+\usetheme[faculty=fw]{MiniUGent}
+
+%%Colors
+%\usecolortheme{wolverine}
+%\usecolortheme[faculty=fw]{UniversiteitGent}
+%\usecolortheme{UniversiteitGent}
+
+%Development settings
+%\setbeamertemplate{background}[grid][step=1cm] %useful for positioning
+
+%%% Preamble
+\title[Forensic deep sequencing] 
+{Porting Forensic DNA Analysis To Deep Sequencing}
+%\subtitle{My-Forensic-Loci-queries and the Forensic-Loci-Allele-Database}
+\author[C. Van Neste]
+{ir.~Christophe~Van~Neste} %\and S.~Anders\inst{2}}
+\institute[LabFBT] % (optional)
+{
+  %\inst{1}%
+  Laboratory of Pharmaceutical Biotechnology\\
+  University Ghent
+%  \and
+%  \inst{2}%
+%  Institute of Theoretical Philosophy\\
+%  University There
+}
+\date[June 11, 2015] % (optional)
+{PhD defense, 2015}
+\subject{Bioinformatics}
+
+\begin{document}
+%Titlepage
+ \frame[t,plain]{ %align from top and plain
+   %\mode<presentation>{\includegraphics[width=\textwidth]{images/ugent_FW_logobalk.pdf}}
+   \titlepage
+ }
+ 
+ %TOC
+ \begin{frame}
+   \frametitle{Table of Contents}
+   \tableofcontents
+  \end{frame}
+ 
+%For long pubblications use parts (>30min)
+% \part{Forensic DNA analysis}
+% \partpage
+
+\section{Introduction: dissecting the title}
+\begin{frame}
+   \transwipe[direction=90]<1>
+   \transduration<2-3>{0.4} %Example "stop motion" presentation video
+  \begin{center}
+    {\large Introduction: dissecting the title\\}
+    \vspace{0.5cm}
+    \pgfimage[height=2cm]{images/veniceport}
+    \pgfimage[height=2cm]{images/crime-scene}
+    \pgfimage[height=2cm]{images/deep-sea-exploration}
+    \pgfimage[height=2cm]{images/quenching}\\
+    \begin{columns}
+      \tiny
+      \column{0.17\textwidth}
+      \column{0.23\textwidth}
+      \uncover<2->{\alert{Port}ing}
+      \column{0.3\textwidth}
+      \uncover<3->{\alert{forensic DNA analysis}}
+      \column{0.3\textwidth}
+      \uncover<4->{to \alert{deep se}\st{a}\alert{quenc}\st{h}\alert{ing}}
+    \end{columns}
+  \end{center}
+\end{frame}
+
+ \subsection{Forensic DNA analysis}
+ \begin{frame}[t]{Forensic DNA analysis}
+   \ifdefstring{\presentationPlatform}{linux}
+   {\transdissolve<3-4>[duration=0.5]} %for linux
+   {\transfade<3-4>} %Works only on Acrobat
+   \begin{itemize}
+     \item<1-> Crime scene investigation (CSI)
+       \only<2>{
+         \vspace{1cm}\\
+         \pgfimage[height=4cm,width=7cm]{images/csi}
+       }
+       \only<3>{
+         \vspace{1cm}\\
+         \pgfimage[height=4cm,width=7cm]{images/csimiami}
+       }
+       \only<4>{
+         \vspace{1cm}\\
+         \pgfimage[height=4cm,width=7cm]{images/csigent1}
+       }
+       \only<5>{
+         \vspace{1cm}\\
+         \pgfimage[height=4cm,width=7cm]{images/csigent2}
+       }
+
+     \item<6-> DNA identification of individuals
+       \begin{itemize}
+       \item<7-> Connecting individuals to places or objects
+       \item<8-> Kinship
+       \end{itemize}
+     \item<9-> Invented 30 years ago by Alec Jeffreys
+     \item<10-> Tandem repeat length-based DNA profiling
+
+     \only<9->{
+       \begin{textblock}{4}(10.8,4)
+         \pgfimage[height=4cm]{images/Alec_Jeffreys}
+       \end{textblock}
+     }
+   \end{itemize}
+ \end{frame}
+
+%Example section without logo
+{\setbeamertemplate{logo}{}
+ \begin{frame}[t]
+   \frametitle{Without logo frame 1}
+ \end{frame}
+ \frame{Without logo frame 2}
+} %end no logo frames
+
+%Example portable multimedia
+ \begin{frame}[t]
+   \frametitle{DNA: what, where, why, and how}
+   \ifdefstring{\presentationPlatform}{linux}
+   {
+     \movie[autostart,showcontrols]{\pgfimage[width=0.5\textwidth]{images/pcrcover}}{images/pcr.ogv}\\ %linux
+   }
+   {
+     \movie[autostart,showcontrols]{\pgfimage[width=0.5\textwidth]{images/pcrcover}}{images/pcr.mov}\\ %mac+win
+   }
+   % \movie[height=4cm,width=6cm,showcontrols,poster,borderwidth=0.1cm]... 
+   %General link for backup solution (will be opened externally)
+   \movie[externalviewer]{\tiny DNA amplification}{images/pcr.mp4} %general
+   
+%Commands
+%drop sound and speed up: ffmpeg -i pcr.mp4 -an -filter:v "setpts=0.5*PTS" pcr_ws.mp4
+%encoding => ffmpeg -i pcr_ws.mp4 pcr.mov
+%            ffmpeg -i pcr_ws.mp4 -qscale:v 7 pcr.ogv
+%cover    => ffmpeg -ss 00:01:12 -i pcr.mp4 -vframes 1 -q:v 2 pcrcover.jpg
+%%Reduce size: ffmpeg -i MiSeqFGx.mp4 -c:a copy -vf scale=640:-1 MiSeqFGx.mov
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%Useful commands for making screenvideo
+%xwininfo #xy positions window for screenvideo - alternative: xdotool getmouselocation
+%xdotool search --name "MyFLsite - Chromium" windowsize 1500 1000
+%ffmpeg -video_size 1500x1000 -framerate 25 -f x11grab -i :0.0+78,21  resultMyFLq.mp4 #first record as mp4 for good quality
+%ffmpeg -i resultMyFLq.mp4 -qscale:v 7 resultMyFLq.ogv #Standard video ogv quality is very low. qscale 1-10, 5-7 usually good
+%ffmpeg -i resultMyFLq.mp4 -pix_fmt yuv420p resultMyFLq.mov #Specific pixel format needed for mov to play on mac/windows!
+ \end{frame}
+
+\subsection{Copy paste examples}
+%Column example
+ \begin{frame}
+   \frametitle{Columns}
+   \begin{columns}
+     \column{0.6\textwidth}
+     0.6 of the width
+     \column{0.4\textwidth}
+     \pause
+     Smaller columns, shown in second slide\\
+   \end{columns}
+ \end{frame}
+
+%Item example
+%For items it is often useful to have top alignment
+ \begin{frame}[t]
+   \frametitle{Items}
+   \begin{itemize}[<+->]
+   \item Generic processing: not only STRs
+   \item No full homopolymer compression
+   \item Automatic determination of flanks
+   \end{itemize}
+ \end{frame}
+
+\end{document}
+
+%Tips
+%%%%%
+% \uncover<x-> usually better than \only<x->
+% \only<x> usually better than \uncover<x> unless it is the last slide
+%
+%Undocumented, but possible transitions
+% \transpush \transfade \transuncover \transcover
+
+
