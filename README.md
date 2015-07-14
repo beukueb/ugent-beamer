@@ -20,4 +20,12 @@ On a linuxbox the following lines would accomplish the latter.
     cp -r ugent-beamer/* ~/texmf/tex/latex/beamer/themes/UGent/
     texhash ~/texmf
 
+To check if the themefile is found
+
+   kpsewhich beamerthemeMiniUGent.sty
+
+If you want the themes in a hidden home directory, change ~/texmf to ~/.texmf:
+
+   sudo emacs $(kpsewhich texmf.cnf)
+
 

@@ -30,6 +30,9 @@
 \newif\ifbeamer@totalframenumber\beamer@totalframenumberfalse
 \DeclareOptionBeamer{totalframenumber}{\beamer@totalframenumbertrue}
 
+\newif\ifbeamer@sectiontoc\beamer@sectiontocfalse
+\DeclareOptionBeamer{sectiontoc}{\beamer@sectiontoctrue}
+
 \ProcessOptionsBeamer
 
 % actual configuration
@@ -65,7 +68,8 @@
 %\vskip20pt 
 %}
 
-% Table of content %TODO make optional
+% Table of content
+\ifbeamer@sectiontoc
 \AtBeginSection[]
 {
   \begin{frame}
@@ -81,6 +85,7 @@
     \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
+\fi %end if sectiontoc
 
 % Sub themes
 %\useinnertheme{UniversiteitGent}
